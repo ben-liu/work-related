@@ -203,10 +203,6 @@ This leads us to wonder, though: how do we know whether an API will reply with X
 The only way you'll know what type of data an API will send you is to read that API's documentation! Some will reply with one, and some will reply with the other. Documentation is a programmer's best friend, and it's always in your best interest to read it so you understand that what the API expects from you and what the API intends to send you when you make a request.
 '''
 
-'''
-
-'''
-
 ### summary
 
 # get method with urllib2
@@ -229,7 +225,73 @@ response = requests.get("http://placekitten.com/")
 
 response.headers	
 response.status_code()	
+response.json
+response.url
 
+
+# capitol words API
+
+'''
+
+'''
+
+import requests
+import pprint
+
+# filters on endpoint data
+query_params = { 'apikey': 'f6ab5f2e4f69444b9f2c0a44d9a5223d',
+             'phrase': 'fiscal cliff'}
+# determines what type of data you will get back
+endpoint = 'http://capitolwords.org/api/text.json'  
+response = requests.get( endpoint, params=query_params)
+data = response.json
+pprint.pprint(data)
+
+#request_url ?
+request_url=response.url
+print request_url
+
+
+# capitol words API practise
+import requests
+import pprint
+
+query_params = { 'apikey': 'f6ab5f2e4f69444b9f2c0a44d9a5223d',
+         'per_page': 3,
+            'phrase': 'holiday season',
+            'start_date': '2012-11-01',
+            'end_date': '2012-12-31'
+        }
+
+endpoint = 'http://capitolwords.org/api/text.json'
+
+response = requests.get(endpoint, params=query_params)
+
+data = response.json
+pprint.pprint(data)
+
+
+# manipulate results
+import requests
+import pprint
+
+query_params = { 'apikey': 'f6ab5f2e4f69444b9f2c0a44d9a5223d',
+             'per_page': 3,
+             'phrase':'happy holidays',
+             'sort':'date desc'
+            }
+
+endpoint = 'http://capitolwords.org/api/text.json'
+
+response = requests.get(endpoint, params=query_params)
+data = response.json
+legislator = data['results'][0]['speaker_first']+" "+data['results'][0]['speaker_last']
+date = data['results'][0]['date']
+
+print "%s said happy holidays on %s" % (legislator,date)
+
+
+# build API interface
 
 
 
