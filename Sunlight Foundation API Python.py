@@ -291,7 +291,30 @@ date = data['results'][0]['date']
 print "%s said happy holidays on %s" % (legislator,date)
 
 
-# build API interface
+# build NPR Story API interface
 
+from urllib2 import urlopen
+from json import load 
 
+url = 'http://api.npr.org/query?apiKey=' 
+key = 'API_KEY'
+url = url + key
+url += '&numResults=3&format=json&id='
+url += raw_input("Which NPR ID do you want to query?")
+
+response = urlopen(url)
+json_obj = load(response)
+
+for story in json_obj['list']['story']:
+	print story['title']['$text'] 	
+	
+
+'''
+Query string parameters work the same for all URLs. 
+The query string begins with a ? (question mark) and what follows is one or more name=value pairs. 
+After the first name/value pair, all subsequent pairs are separated by an ampersand &. The URL
+http://your.url.com/directory?a=1&b=2&c=3
+has three query string parameters: a has a value of 1, b has a value of 2, and c has a value of 3. 
+The order of name/value pairs isn't important, they work just like a Python dictionary.
+'''
 
